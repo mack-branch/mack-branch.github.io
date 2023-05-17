@@ -40,6 +40,7 @@ function function5() {
   document.body.appendChild(iframe);
   setTimeout(function timeout() {
     if (!hasURI) {
+      console.log("replace - app store")
       window.top.location.replace("macappstores://apps.apple.com/us/app/hp-smart-for-desktop/id1474276998");
     }
     intervalExecuted = true;
@@ -60,6 +61,7 @@ function function7() {
   document.body.appendChild(iframe);
   setTimeout(function timeout() {
     if (!hasURI) {
+      console.log("replace - app store")
       window.top.location.replace("macappstores://apps.apple.com/us/app/hp-smart-for-desktop/id1474276998");
     }
     intervalExecuted = true;
@@ -68,6 +70,40 @@ function function7() {
 
 function function8() {
 	window.top.location = "ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6"
+}
+
+function function9() {
+  var hasURI = false;
+  var iframe = document.createElement("iframe");
+  iframe.style.border = "none";
+  iframe.style.width = "1px";
+  iframe.style.height = "1px";
+  iframe.src = "hp-smart://open";
+  document.body.appendChild(iframe);
+  setTimeout(function timeout() {
+    if (!hasURI) {
+      console.log("replace - app store")
+      window.top.location.replace("ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6");
+    }
+    intervalExecuted = true;
+  }, 500);
+}
+
+function function10() {
+  var hasURI = false;
+  var iframe = document.createElement("iframe");
+  iframe.style.border = "none";
+  iframe.style.width = "1px";
+  iframe.style.height = "1px";
+  iframe.src = "zoommtg://open";
+  document.body.appendChild(iframe);
+  setTimeout(function timeout() {
+    if (!hasURI) {
+      console.log("replace - app store")
+      window.top.location.replace("ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6");
+    }
+    intervalExecuted = true;
+  }, 500);
 }
 
 </script>
@@ -88,9 +124,14 @@ function function8() {
 <br>
 <input type="button" value="window.top.location MS Windows store" onclick="function8()">
 <br>
-<input type="button" value="HP Smart iFrame" onclick="function5()">
 <br>
-<input type="button" value="Zoom iFrame" onclick="function7()">
+<input type="button" value="HP Smart iFrame (Mac)" onclick="function5()">
+<br>
+<input type="button" value="Zoom iFrame (Mac)" onclick="function7()">
+<br>
+<input type="button" value="HP Smart iFrame (Windows)" onclick="function9()">
+<br>
+<input type="button" value="Zoom iFrame (Windows)" onclick="function10()">
 <br>
 <br>
 </body>
