@@ -1,0 +1,29 @@
+<html>
+<head>
+<script>
+// Like DEFER_IFRAME
+const primaryRedirect = "hp-smart://open";
+const secondaryRedirect = "ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6'";
+window.onload = function() {
+  console.log("onload");
+  var iframe = document.createElement("iframe");
+
+  iframe.style.border = "none";
+  iframe.style.width = "1px";
+  iframe.style.height = "1px";
+  iframe.src = primaryRedirect; // TODO: try other ways of opening this
+  document.body.appendChild(iframe);
+  setTimeout(function timeout() {
+    console.log("replace - app store")
+    window.top.location.replace(secondaryRedirect);
+  }, 250);
+}
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    We have redirected you to the desktop app.
+  </div>
+</body>
+</html>

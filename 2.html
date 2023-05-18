@@ -1,0 +1,24 @@
+<html>
+<head>
+<script>
+
+// Like DEFER_IFRAME but with top location
+const primaryRedirect = "hp-smart://open";
+const secondaryRedirect = "ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6'";
+window.onload = function() {
+  console.log("onload");
+  window.top.location = primaryRedirect;
+  setTimeout(function timeout() {
+    console.log("replace - app store")
+    window.top.location.replace(secondaryRedirect);
+  }, 500);
+}
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    We have redirected you to the desktop app.
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<html>
+<head>
+<script>
+
+// Initially set isBlurred to false. If a CTA view comes up, then window.onblur() is going
+// to be called and isBlurred will be set to true
+let isBlurred = false;
+let fallbackHappened = false;
+const primaryRedirect = "hp-smart://open";
+const secondaryRedirect = "ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6'";
+
+function fallback() {
+    console.log("fallback");
+    if (document.webkitHidden || document.hidden || document.msHidden) {
+        // The browser window is hidden. This means that the uri scheme properly opened.
+        // No need to fallback
+        return;
+    }
+
+    // The deepview is still visible. If it is blurred, this means that the uri scheme is in the
+    // process of opening, or that the CTA view is still up. Do not fallback yet.
+    // If the fallback already happened, then don't fallback again. This way we dont publish
+    // a bunch of duplicate clicks due to our setInterval function below.
+    const location = window.top.location.href;
+    if (isBlurred || fallbackHappened || location === primaryRedirect) {
+        return;
+    }
+
+    fallbackHappened = true;
+    window.top.location = secondaryRedirect;
+}
+window.onblur = function() {
+    isBlurred = true;
+};
+
+window.onfocus = function() {
+    isBlurred = false;
+    // if we end up focusing on the deepview again, this means that we should fallback
+    // because it means that the uri scheme did not open
+    fallback();
+};
+
+window.onload = function() {
+    window.top.location = primaryRedirect;
+    setTimeout(function() {
+        fallback();
+    }, 500);
+};
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    We have redirected you to the desktop app.
+  </div>
+</body>
+</html>

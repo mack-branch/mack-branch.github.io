@@ -1,0 +1,51 @@
+<html>
+<head>
+<script>
+// IFRAME_WINDOW_AUTO_FALLBACK (original) but with updated onfocus
+var hasURI = false;
+var intervalExecuted = false;
+var focusExecuted = false;
+const primaryRedirect = "hp-smart://open";
+const secondaryRedirect = "macappstores://apps.apple.com/us/app/hp-smart-for-desktop/id1474276998";
+window.onload = function() {
+  console.log("onload");
+  var iframe = document.createElement("iframe");
+
+  iframe.style.border = "none";
+  iframe.style.width = "1px";
+  iframe.style.height = "1px";
+  iframe.src = primaryRedirect; // TODO: try other ways of opening this
+  document.body.appendChild(iframe);
+  setTimeout(function timeout() {
+    if (!hasURI) {
+      console.log("replace - app store")
+      window.top.location.replace(secondaryRedirect);
+    }
+    intervalExecuted = true;
+    console.log("executed");
+  }, 500);
+}
+
+window.onblur = function() {
+  console.log("blur");
+  // window would be blurred if popup is shown
+  // popup is shown if iframe.src works, aka uri scheme is valid (app exists)
+  // we assume uri scheme fails if app doesnt exist -broken on windows
+  hasURI = true;
+};
+window.onfocus = function() {
+  console.log("focus");
+  if (!focusExecuted && hasURI) {
+    window.top.location = secondaryRedirect;
+    focusExecuted = true;
+  }
+};
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    We have redirected you to the desktop app.
+  </div>
+</body>
+</html>
