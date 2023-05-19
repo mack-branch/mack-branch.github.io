@@ -6,21 +6,19 @@
 function detectOS() {
   const userAgent = navigator.userAgent;
   const platform = navigator.platform;
-  console.log(userAgent);
-  console.log(platform);
 
   const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
   const macPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
   const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
   const androidPlatforms = ['Android'];
 
-  if (windowsPlatforms.some((platform) => platform.includes(platform))) {
+  if (windowsPlatforms.includes(platform)) {
     return 'Windows';
-  } else if (macPlatforms.some((platform) => platform.includes(platform))) {
+  } else if (macPlatforms.includes(platform)) {
     return 'Mac';
-  } else if (iosPlatforms.some((platform) => platform.includes(platform))) {
+  } else if (iosPlatforms.includes(platform)) {
     return 'iOS';
-  } else if (androidPlatforms.some((platform) => platform.includes(platform))) {
+  } else if (androidPlatforms.includes(platform)) {
     return 'Android';
   } else {
     return 'Unknown';
