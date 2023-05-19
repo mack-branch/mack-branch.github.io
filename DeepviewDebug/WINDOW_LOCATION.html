@@ -1,0 +1,28 @@
+<html>
+<head>
+<script>
+// WINDOW_LOCATION
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+window.onload = function() {window.top.location = primary;};
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    <h3>WINDOW_LOCATION</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>

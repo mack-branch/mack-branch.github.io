@@ -1,0 +1,48 @@
+<html>
+<head>
+<script>
+// COPY_CLIPBOARD
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+window.onload = function() {
+  document.getElementsByClassName("cta-button")[0].onclick = function() {
+    // hide main CTA and display "page copied"
+    document.getElementById('btn-app').style.display = 'none';
+    document.getElementById('btn-copied').style.display = 'flex';
+    event.preventDefault() // pause redirect
+
+    var copyInput = document.createElement("ta");
+    copyInput.style.position = "fixed";
+    copyInput.style.opacity = "0";
+    copyInput.textContent = document.getElementsByClassName("cta-button")[0];
+    copyInput.textContent = copyInput.textContent + '&_cpts=' + Date.now();
+
+    navigator.clipboard.writeText(copyInput.textContent)
+      .then(() => {
+      })
+      .catch(err => {
+      });
+
+    setTimeout( function() { window.location = action + "&nl_opt_in=1"; }, 500 );
+  }
+};
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    <h3>COPY_CLIPBOARD</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>

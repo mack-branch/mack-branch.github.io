@@ -1,0 +1,69 @@
+<html>
+<head>
+<script>
+// WINDOW_LOCATION_AUTO_FALLBACK
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+// Initially set isBlurred to false. If a CTA view comes up, then window.onblur() is going
+// to be called and isBlurred will be set to true
+let isBlurred = false;
+let fallbackHappened = false;
+
+function fallback() {
+    if (document.webkitHidden || document.hidden || document.msHidden) {
+        // The browser window is hidden. This means that the uri scheme properly opened.
+        // No need to fallback
+        return;
+    }
+
+    // The deepview is still visible. If it is blurred, this means that the uri scheme is in the
+    // process of opening, or that the CTA view is still up. Do not fallback yet.
+    // If the fallback already happened, then don't fallback again. This way we dont publish
+    // a bunch of duplicate clicks due to our setInterval function below.
+    const location = window.top.location.href;
+    if (isBlurred || fallbackHappened || location === primary) {
+        return;
+    }
+
+    fallbackHappened = true;
+
+    window.top.location = action;
+}
+window.onblur = function() {
+    isBlurred = true;
+};
+
+window.onfocus = function() {
+    isBlurred = false;
+    // if we end up focusing on the deepview again, this means that we should fallback
+    // because it means that the uri scheme did not open
+    fallback();
+};
+
+window.onload = function() {
+    window.top.location = primary;
+    setTimeout(function() {
+        fallback();
+    }, 500);
+};
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    <h3>WINDOW_LOCATION_AUTO_FALLBACK</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>

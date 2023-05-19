@@ -1,0 +1,47 @@
+<html>
+<head>
+<script>
+// WINDOW_LOCATION_COPY_CLIPBOARD
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+window.onload = function() {
+  window.onload = function() {window.top.location = validateProtocol(primary);};
+
+  document.getElementsByClassName("cta-button")[0].onclick = function() {
+    if (document.getElementById("cpoptin") && !document.getElementById("cpoptin").checked) {
+      return;
+    }
+
+    var copyInput = document.createElement("ta");
+    copyInput.style.position = "fixed";
+    copyInput.style.opacity = "0";
+    copyInput.textContent = document.getElementsByClassName("cta-button")[0];
+    copyInput.textContent = copyInput.textContent + '&_cpts=' + Date.now();
+
+    navigator.clipboard.writeText(copyInput.textContent)
+      .then(() => {
+      })
+      .catch(err => {
+      });
+  }
+};
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    <h3>WINDOW_LOCATION_COPY_CLIPBOARD</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>

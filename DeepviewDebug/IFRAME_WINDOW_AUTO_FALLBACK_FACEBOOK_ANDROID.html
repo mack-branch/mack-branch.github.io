@@ -1,0 +1,42 @@
+<html>
+<head>
+<script>
+// IFRAME_WINDOW_AUTO_FALLBACK_FACEBOOK_ANDROID
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+window.onload = function() {
+  setTimeout(function timeout() {
+    var iframe = document.createElement("iframe");
+    iframe.style.border = "none";
+    iframe.style.width = "1px";
+    iframe.style.height = "1px";
+    iframe.src = primary;
+    document.body.appendChild(iframe);
+    setTimeout(function timeout() {
+      if (document.webkitHidden || document.hidden) { return; }
+      window.top.location = action;
+    }, 500);
+  }, 250);
+};
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+
+    <h3>IFRAME_WINDOW_AUTO_FALLBACK_FACEBOOK_ANDROID</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>

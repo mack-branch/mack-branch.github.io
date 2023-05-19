@@ -1,0 +1,30 @@
+<html>
+<head>
+<script>
+// IFRAME_SRC
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+window.onload = function() {document.getElementById("l").src = primary;};
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+
+    <h3>IFRAME_SRC</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+  <iframe id="l" width="1" height="1" style="visibility:hidden"></iframe>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<html>
+<head>
+<script>
+// WINDOW_LOCATION_COOKIE
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+var hasRedirected = false;
+const shouldUseFallbackAlert = action.startsWith("itms-apps");
+var handler = function() {
+  if (!document.hidden && !hasRedirected && !shouldUseFallbackAlert) {
+    window.top.location = action;
+    hasRedirected = true;
+  }
+};
+
+var redirectionCookie = "ignore_uri_redirect_bnc";
+
+function hasCookie() {
+  return document.cookie.indexOf(redirectionCookie) === -1 ? false : true;
+}
+
+if (!hasCookie()) {
+  document.cookie = redirectionCookie + "=true; expires=" + new Date(Date.now() + 750 ).toGMTString();
+  window.top.location = primary;
+  setTimeout(function timeout() {
+    if (document.webkitHidden || document.hidden) { return; };
+    if (shouldUseFallbackAlert && isSafari12Dot3OrGreater()) {
+      if (window.confirm("Open in App Store?")) {
+        window.top.location = action;
+      }
+    } else {
+      window.top.location = action;
+    }
+  }, 250);
+}
+document.addEventListener("visibilitychange", handler);
+
+</script>
+</head>
+<body>
+  <div class="sub-heading">
+    <h3>WINDOW_LOCATION_COOKIE</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>

@@ -2,6 +2,59 @@
 <head>
 <script>
 
+// Check if the user agent or platform contains specific strings to identify the OS
+function detectOS() {
+  const userAgent = navigator.userAgent;
+  const platform = navigator.platform;
+  console.log(userAgent);
+  console.log(platform);
+
+  const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
+  const macPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+  const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
+  const androidPlatforms = ['Android'];
+
+  if (windowsPlatforms.some((platform) => platform.includes(platform))) {
+    return 'Windows';
+  } else if (macPlatforms.some((platform) => platform.includes(platform))) {
+    return 'Mac';
+  } else if (iosPlatforms.some((platform) => platform.includes(platform))) {
+    return 'iOS';
+  } else if (androidPlatforms.some((platform) => platform.includes(platform))) {
+    return 'Android';
+  } else {
+    return 'Unknown';
+  }
+}
+
+const zoomUri = "zoommtg://open";
+const action = "https://spotify.app.link";
+const macStore = "macappstores://apps.apple.com/us/app/hp-smart-for-desktop/id1474276998";
+const windowsStore = "ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6";
+const iosStore = "itms-app://open";
+const androidStore = "market://open";
+function getStoreRedirectByOS(os) {
+  if (os === 'Windows') {
+    return windowsStore;
+  } else if (os === 'Mac') {
+    return macStore;
+  } else if (os === 'iOS') {
+    return iosStore;
+  } else if (os === 'Android') {
+    return androidStore;
+  } else {
+    return 'Unknown';
+  }
+}
+
+function redirectToTargetPage(base) {
+  const store = getStoreRedirectByOS(detectOS());
+  const url = `${base}?primary=${zoomUri}&action=${action}&secondary=${encodeURIComponent(store)}`;
+
+  // Redirect to the target page
+  window.location.href = url;
+}
+
 window.onload = function() {
   console.log("onload");
 }
@@ -59,51 +112,10 @@ function function7() {
   iframe.style.height = "1px";
   iframe.src = "zoommtg://open";
   document.body.appendChild(iframe);
-  setTimeout(function timeout() {
-    if (!hasURI) {
-      console.log("replace - app store")
-      window.top.location.replace("macappstores://apps.apple.com/us/app/hp-smart-for-desktop/id1474276998");
-    }
-    intervalExecuted = true;
-  }, 500);
 }
 
 function function8() {
 	window.top.location = "ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6"
-}
-
-function function9() {
-  var hasURI = false;
-  var iframe = document.createElement("iframe");
-  iframe.style.border = "none";
-  iframe.style.width = "1px";
-  iframe.style.height = "1px";
-  iframe.src = "hp-smart://open";
-  document.body.appendChild(iframe);
-  setTimeout(function timeout() {
-    if (!hasURI) {
-      console.log("replace - app store")
-      window.top.location.replace("ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6");
-    }
-    intervalExecuted = true;
-  }, 500);
-}
-
-function function10() {
-  var hasURI = false;
-  var iframe = document.createElement("iframe");
-  iframe.style.border = "none";
-  iframe.style.width = "1px";
-  iframe.style.height = "1px";
-  iframe.src = "zoommtg://open";
-  document.body.appendChild(iframe);
-  setTimeout(function timeout() {
-    if (!hasURI) {
-      console.log("replace - app store")
-      window.top.location.replace("ms-windows-store://pdp/?PFN=AD2F1837.HPPrinterControl_v10z8vjag6ke6");
-    }
-    intervalExecuted = true;
-  }, 500);
 }
 
 </script>
@@ -124,28 +136,62 @@ function function10() {
 <br>
 <input type="button" value="window.top.location MS Windows store" onclick="function8()">
 <br>
+<input type="button" value="iframe.src: Zoom URI" onclick="function7()">
 <br>
-<input type="button" value="HP Smart iFrame (Mac)" onclick="function5()">
 <br>
-<input type="button" value="Zoom iFrame (Mac)" onclick="function7()">
+<h3> Deepview Redirect Logic Debug </h3>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/IFRAME_SRC.html')">IFRAME_SRC</a>
 <br>
-<input type="button" value="HP Smart iFrame (Windows)" onclick="function9()">
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/WINDOW_LOCATION.html')">WINDOW_LOCATION</a>
 <br>
-<input type="button" value="Zoom iFrame (Windows)" onclick="function10()">
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/DEFER_IFRAME.html')">DEFER_IFRAME</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/IFRAME_WINDOW_AUTO_FALLBACK.html')">IFRAME_WINDOW_AUTO_FALLBACK</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/WINDOW_LOCATION_AUTO_FALLBACK.html')">WINDOW_LOCATION_AUTO_FALLBACK</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/WINDOW_LOCATION_AUTO_FALLBACK_desktop.html')">WINDOW_LOCATION_AUTO_FALLBACK desktop</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/IFRAME_WINDOW_AUTO_FALLBACK_FACEBOOK_ANDROID.html')">IFRAME_WINDOW_AUTO_FALLBACK_FACEBOOK_ANDROID</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/WINDOW_LOCATION_COOKIE.html')">WINDOW_LOCATION_COOKIE</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/WINDOW_LOCATION_COOKIE.html')">COPY_CLIPBOARD</a>
+<br>
+<a href="#" onclick="redirectToTargetPage('DeepviewDebug/WINDOW_LOCATION_COOKIE.html')">WINDOW_LOCATION_COPY_CLIPBOARD</a>
+<br>
+
+<!-- <a href="DeepviewDebug/WINDOW_LOCATION.html">WINDOW_LOCATION</a>
+<br>
+<a href="DeepviewDebug/DEFER_IFRAME.html">DEFER_IFRAME</a>
+<br>
+<a href="DeepviewDebug/IFRAME_WINDOW_AUTO_FALLBACK_desktop.html">IFRAME_WINDOW_AUTO_FALLBACK Desktop</a>
+<br>
+<a href="DeepviewDebug/IFRAME_WINDOW_AUTO_FALLBACK.html">IFRAME_WINDOW_AUTO_FALLBACK</a>
+<br>
+<a href="DeepviewDebug/WINDOW_LOCATION_AUTO_FALLBACK.html">WINDOW_LOCATION_AUTO_FALLBACK</a>
+<br>
+<a href="DeepviewDebug/WINDOW_LOCATION_AUTO_FALLBACK_desktop.html">WINDOW_LOCATION_AUTO_FALLBACK_desktop</a>
+<br>
+<a href="DeepviewDebug/IFRAME_WINDOW_AUTO_FALLBACK_FACEBOOK_ANDROID.html">IFRAME_WINDOW_AUTO_FALLBACK_FACEBOOK_ANDROID</a>
+<br>
+<a href="DeepviewDebug/WINDOW_LOCATION_COOKIE.html">WINDOW_LOCATION_COOKIE</a> -->
+
+
 <br>
 <br>
 <h3>INTENG-18257 links</h3>
-<a href="0.html">HP Smart 0</a>
+<a href="INTENG/0.html">HP Smart 0</a>
 <br>
-<a href="1.html">HP Smart 1</a>
+<a href="INTENG/1.html">HP Smart 1</a>
 <br>
-<a href="2.html">HP Smart 2</a>
+<a href="INTENG/2.html">HP Smart 2</a>
 <br>
-<a href="3.html">HP Smart 3</a>
+<a href="INTENG/3.html">HP Smart 3</a>
 <br>
-<a href="4.html">HP Smart 4</a>
+<a href="INTENG/4.html">HP Smart 4</a>
 <br>
-<a href="5.html">Zoom 5</a>
+<a href="INTENG/5.html">Zoom 5</a>
 <br>
 <br>
 </body>

@@ -1,0 +1,37 @@
+<html>
+<head>
+<script>
+// DEFER_IFRAME
+
+const urlParams = new URLSearchParams(window.location.search);
+const primary = urlParams.get('primary');
+const action = urlParams.get('action');
+const secondary = urlParams.get('secondary');
+
+window.onload = function() {
+  setTimeout(function timeout() {
+    var iframe = document.createElement("iframe");
+    iframe.style.border = "none";
+    iframe.style.width = "1px";
+    iframe.style.height = "1px";
+    iframe.src = primary;
+    document.body.appendChild(iframe);
+  }, 250);
+};
+
+</script>
+</head>
+<body>
+  <div>
+    <h3>DEFER_IFRAME</h3>
+
+    To change the redirect locations used in this template, change the query params in the URL!
+    <br>
+    primary = the first thing we try to open (usually passively)
+    <br>
+    action = usually a branch link, sometimes used as the fallback by some templates
+    <br>
+    secondary = the fallback in most cases, instead of action
+  </div>
+</body>
+</html>
